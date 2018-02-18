@@ -2692,4 +2692,2053 @@ SKIPVIEW SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
 
 
 
+Task
+Write a function that accepts msg string and returns local tops of string from the highest to the lowest.
+The string's tops are from displaying the string in the below way:
+
+                                                      3 
+                              p                     2   4
+            g               o   q                 1
+  b       f   h           n       r             z 
+a   c   e       i       m          s          y
+      d           j   l             t       x
+                    k                 u   w 
+                                        v
+The next top is always 1 character higher than the previous one. For the above example, the solution for the abcdefghijklmnopqrstuvwxyz1234 input string is 3pgb.
+
+When the msg string is empty, return an empty string.
+The input strings may be very long. Make sure your solution has good performance.
+Check the test cases for more samples.
+
+
+function tops(msg) {
+   var recent = [0, 0]
+   var current = [0]
+   var final = ""
+   var direction = "up"
+   for (var i = 0; i < msg.length; i++) {
+     if (current[0] > recent[0]) {
+       final += msg[i]
+       recent[0] = current[0]
+       direction = "down"
+     } else if (current[0] < recent[1]) {
+       recent[1] = current[0]
+       direction = "up"
+     }
+     if (direction === "up") {
+       current[0] += 1
+     } else if (direction === "down") {
+       current[0] -= 1
+     }
+   }
+   return final.split("").reverse().join("")
+}
+
+
+Task:
+Given n representing the number of floors build a beautiful multi-million dollar mansions like the ones in the example below:
+
+/*
+     /\
+    /  \
+   /    \
+  /______\  // number of floors 3
+  |      |
+  |      |
+  |______|
+
+     /\
+    /  \
+   /____\
+   |    |   // 2 floors
+   |____|
+
+     /\
+    /__\    // 1 floor
+    |__|
+
+*/
+
+
+Note: whitespace should be preserved on both sides of the roof. Number of floors will go up to 30. There will be no tests with invalid input.
+If you manage to complete it, you can try a harder version here
+
+Good luck!
+
+
+function myCrib(n) {
+  var final = ""
+  for (var i = n; i > 0; i--) {
+    final += (" ".repeat(i)) + "/" + (" ".repeat(n-i)) + (" ".repeat(n-i)) + "\\" + (" ".repeat(i)) + "\n"
+  }
+  final += "/" + ("_".repeat(n*2)) + "\\" + "\n"
+  for (var j = n; j > 1; j--) {
+    final += "|" + (" ".repeat(n*2)) + "|" + "\n"
+  }
+  final += "|" + ("_".repeat(n*2)) + "|"
+  return final
+}
+
+
+A square of squares
+You like building blocks. You especially like building blocks that are squares. And what you even like more, is to arrange them into a square of square building blocks!
+
+However, sometimes, you can't arrange them into a square. Instead, you end up with an ordinary rectangle! Those blasted things! If you just had a way to know, whether you're currently working in vain… Wait! That's it! You just have to check if your number of building blocks is a perfect square.
+
+Task
+Given an integral number, determine if it's a square number:
+
+In mathematics, a square number or perfect square is an integer that is the square of an integer; in other words, it is the product of some integer with itself.
+
+The tests will always use some integral number, so don't worry about that in dynamic typed languages.
+
+Examples
+isSquare(-1) // => false
+isSquare( 3) // => false
+isSquare( 4) // => true
+isSquare(25) // => true
+isSquare(26) // => false
+
+
+
+var isSquare = function(n){
+  return Number.isInteger(Math.sqrt(n))
+}
+
+
+Given an array of numbers, determine whether the sum of all of the numbers is odd or even.
+
+Give your answer in string format as 'odd' or 'even'.
+
+If the input array is empty consider it as: [0] (array with a zero).
+
+Example:
+
+oddOrEven([0]) returns "even"
+oddOrEven([2, 5, 34, 6]) returns "odd"
+oddOrEven([0, -1, -5]) returns "even"
+Have fun!
+
+
+def odd_or_even(array)
+  total = 0
+  i = 0
+  until i > array.length - 1
+    total += array[i]
+  i += 1
+  end
+  if total % 2 == 0
+    return "even"
+  else
+    return "odd"
+  end
+end
+
+
+Return the number (count) of vowels in the given string.
+
+We will consider a, e, i, o, and u as vowels for this Kata.
+
+The input string will only consist of lower case letters and/or spaces.
+
+
+def getCount(inputStr)
+  str_to_count = ""
+  count = 0
+  while count < inputStr.length
+    if inputStr[count] == "a" || inputStr[count] == "e" || inputStr[count] == "i" || inputStr[count] == "o" || inputStr[count] == "u"
+      str_to_count << inputStr[count]
+    end
+    count += 1
+  end
+  return str_to_count.length
+end
+def getCount(inputStr)
+  arr_to_count = []
+  word = inputStr.split("")
+  word.each do |i|
+    if i == "a"
+      arr_to_count << "a"
+    elsif i == "e"
+      arr_to_count << "e"
+    elsif i == "i"
+      arr_to_count << "i"
+    elsif i == "o"
+      arr_to_count << "o"
+    elsif i == "u"
+      arr_to_count << "u"
+    end
+  end
+  return arr_to_count.length
+end
+
+
+This time no story, no theory. The examples below show you how to write function accum:
+
+Examples:
+
+accum("abcd");    // "A-Bb-Ccc-Dddd"
+accum("RqaEzty"); // "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+accum("cwAt");    // "C-Ww-Aaa-Tttt"
+The parameter of accum is a string which includes only letters from a..z and A..Z.
+
+
+def accum(s)
+	final = ""
+  i = 0
+  until i > s.length - 1
+    j = 1
+    until j > i + 1
+      if j == 1
+        final += s[i].capitalize
+      else
+        final += s[i].downcase
+     end
+    j += 1
+    end
+    if !(i == s.length - 1)
+      final += "-"
+    end
+  i += 1
+  end
+  final
+end
+
+
+Check to see if a string has the same amount of 'x's and 'o's. The method must return a boolean and be case insensitive. The string can contain any char.
+
+Examples input/output:
+
+XO("ooxx") => true
+XO("xooxx") => false
+XO("ooxXm") => true
+XO("zpzpzpp") => true // when no 'x' and 'o' is present should return true
+XO("zzoo") => false
+
+
+function XO(str) {
+    sum = 0
+    for (var x = 0; x < str.length; x++) {
+    if (str[x].toLowerCase() == "x") sum++;
+    if (str[x].toLowerCase() == "o") sum--;
+    }
+    return sum == 0;
+}
+
+
+
+Create a function that returns the sum of the two lowest positive numbers given an array of minimum 4 integers. No floats or empty arrays will be passed.
+
+For example, when an array is passed like [19, 5, 42, 2, 77], the output should be 7.
+
+[10, 343445353, 3453445, 3453545353453] should return 3453455.
+
+Hint: Do not modify the original array.
+
+
+function sumTwoSmallestNumbers(numbers) {  
+  var sum = 0
+  array = numbers.sort(function(a,b) {return a - b})
+    for (x = 0; x <= 1; x++) {
+      sum += array[x]
+      } return sum
+}; 
+
+
+
+We want to know the index of the vowels in a given word, for example, there are two vowels in the word super (the second and fourth letters).
+
+So given a string "super", we should return a list of [2, 4].
+
+Some examples:
+Mmmm  => []
+Super => [2,4]
+Apple => [1,5]
+YoMama -> [1,2,4,6]
+NOTE: Vowels in this context refers to English Language Vowels - a e i o u y
+
+NOTE: this is indexed from [1..n] (not zero indexed!)
+
+
+
+def vowel_indices(word)
+	vowels = ["a", "e", "i", "o", "u", "y"]
+  word_ct = 0
+  final = []
+  while word_ct < word.length do
+    vwl_ct = 0
+    until vwl_ct == vowels.length do
+      if word[word_ct].downcase == vowels[vwl_ct]
+        final << word_ct + 1
+      end
+      vwl_ct += 1
+    end
+  word_ct += 1
+  end
+  return final
+end
+
+
+
+
+Given an array of integers your solution should find the smallest integer.
+
+For example:
+Given [34, 15, 88, 2] your solution will return 2
+Given [34, -345, -1, 100] your solution will return -345
+You can assume, for the purpose of this kata, that the supplied array will not be empty.
+
+
+
+class SmallestIntegerFinder {
+  findSmallestInt(args) {
+    var shortest = 1000000000000
+    for (var x = 0; x < args.length; x++) {
+      if (args[x] < shortest) {
+        shortest = args[x]
+      }
+    } return shortest
+  } 
+}
+
+
+
+Complete the solution so that it reverses the string value passed into it.
+
+solution('world'); // returns 'dlrow'
+
+
+function solution(str){
+  final = ""
+  for(i=str.length-1;i>=0;i--) {
+    final += str[i]
+  }
+  return final
+}
+
+
+As a part of this Kata, you need to create a function that when provided with a triplet, returns the index of the numerical element that lies between the other two elements.
+
+The input to the function will be an array of three distinct numbers (Haskell: a tuple).
+
+For example:
+
+gimme([2, 3, 1]) => 0
+2 is the number that fits between 1 and 3 and the index of 2 in the input array is 0.
+
+Another example (just to make sure it is clear):
+
+gimme([5, 10, 14]) => 1
+10 is the number that fits between 5 and 14 and the index of 10 in the input array is 1.
+
+
+var gimme = function (inputArray) {
+  if ((inputArray[0] < inputArray[1] && inputArray[0] > inputArray[2])
+  || (inputArray[0] > inputArray[1] && inputArray[0] < inputArray[2])) {
+  return 0
+  }
+  if ((inputArray[1] < inputArray[0] && inputArray[1] > inputArray[2])
+  || (inputArray[1] > inputArray[0] && inputArray[1] < inputArray[2])) {
+  return 1
+  }
+  if ((inputArray[2] < inputArray[1] && inputArray[2] > inputArray[0])
+  || (inputArray[2] > inputArray[1] && inputArray[2] < inputArray[0])) {
+  return 2
+  }
+  
+};
+
+
+In this kata you will create a function that takes a list of non-negative integers and strings and returns a new list with the strings filtered out.
+
+Example
+filter_list([1,2,'a','b']) == [1,2]
+filter_list([1,'a','b',0,15]) == [1,0,15]
+filter_list([1,2,'aasf','1','123',123]) == [1,2,123]
+
+
+function filter_list(l) {
+  var array = []
+  for (x=0; x<l.length; x++) {
+    if (typeof l[x] === "number") {
+    array.push(l[x])
+    }
+  } return array
+}
+function filter_list(l) {
+  return l.filter(function(v) {return typeof v === "number"})
+}
+function filter_list(l) {
+  return l.filter (function(v) {return typeof v === "number"})
+}
+function filter_list(l) {
+  return l.filter (function (v) {return typeof v === "number"})
+}
+
+
+
+Implement the method isSortedAndHow, which accepts an array of integers, and returns one of the following:
+
+'yes, ascending' - if the numbers in the array are sorted in an ascending way
+'yes, descending' - if the numbers in the array are sorted in a descending way
+'no'
+You can assume the array will always be valid, and there will always be one correct answer.
+
+
+def is_sorted_and_how(arr)
+    if arr.sort == arr
+      return "yes, ascending"
+    elsif arr.sort.reverse == arr
+      return "yes, descending"
+    else
+      return "no"
+    end
+end
+
+
+
+Trolls are attacking your comment section!
+
+A common way to deal with this situation is to remove all of the vowels from the trolls' comments, neutralizing the threat.
+
+Your task is to write a function that takes a string and return a new string with all vowels removed.
+
+For example, the string "This website is for losers LOL!" would become "Ths wbst s fr lsrs LL!".
+
+Note: for this kata y isn't considered a vowel.
+
+Beware: In error messages Expected and Actual are flipped.
+
+
+function disemvowel(str) {
+  return str.replace(/[aeiou]/gi, "")
+}
+
+
+Welcome. In this kata, you are asked to square every digit of a number.
+
+For example, if we run 9119 through the function, 811181 will come out, because 92 is 81 and 12 is 1.
+
+Note: The function accepts an integer and returns an integer
+
+
+def square_digits(num)
+  final = ""
+  num_string = num.to_s
+  i = 0
+  until i > num_string.length - 1
+    final += (num_string[i].to_i * num_string[i].to_i).to_s
+  i += 1
+  end
+  final.to_i
+end
+
+
+
+Jaden Smith, the son of Will Smith, is the star of films such as The Karate Kid (2010) and After Earth (2013). Jaden is also known for some of his philosophy that he delivers via Twitter. When writing on Twitter, he is known for almost always capitalizing every word.
+
+Your task is to convert strings to how they would be written by Jaden Smith. The strings are actual quotes from Jaden Smith, but they are not capitalized in the same way he originally typed them.
+
+Example:
+
+Not Jaden-Cased: "How can mirrors be real if our eyes aren't real"
+Jaden-Cased:     "How Can Mirrors Be Real If Our Eyes Aren't Real"
+Note that the Java version expects a return value of null for an empty string or null.
+
+
+class String
+  def toJadenCase
+     array = self.split(" ")
+     final = []
+     array.each do |k|
+       final << k.capitalize
+     end
+     final.join(" ")
+  end
+end
+
+
+Given two numbers and an arithmetic operator (the name of it, as a string), return the result of the two numbers having that operator used on them.
+
+a and b will both be positive integers, and a will always be the first number in the operation, and b always the second.
+
+The four operators are "add", "subtract", "divide", "multiply".
+
+A few examples:
+
+arithmetic(5, 2, "add")      => returns 7
+arithmetic(5, 2, "subtract") => returns 3
+arithmetic(5, 2, "multiply") => returns 10
+arithmetic(5, 2, "divide")   => returns 2.5
+Try to do it without using if statements!
+
+
+
+
+def arithmetic(a, b, operator)
+  if operator == "add"
+    return a + b
+  elsif operator == "subtract"
+    return a - b
+  elsif operator == "multiply"
+    return a * b
+  elsif operator == "divide"
+    return a / b
+  end
+end
+
+
+
+Your task is to make a function that can take any non-negative integer as a argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
+
+Examples:
+Input: 21445 Output: 54421
+
+Input: 145263 Output: 654321
+
+Input: 1254859723 Output: 9875543221
+
+
+def descending_order(n)
+  n.to_s.split("").sort.reverse.join("").to_i
+end
+
+
+Implement a method that accepts 3 integer values a, b, c. The method should return true if a triangle can be built with the sides of given length and false in any other case.
+
+(In this case, all triangles must have surface greater than 0 to be accepted).
+
+
+function isTriangle(a,b,c) {
+  if ((a + b > c) && (a + c > b) && (b + c > a)) {
+    return true
+  } else {
+   return false;
+  }
+}
+
+
+Take 2 strings s1 and s2 including only letters from ato z. Return a new sorted string, the longest possible, containing distinct letters,
+
+each taken only once - coming from s1 or s2. #Examples: ``` a = "xyaabbbccccdefww" b = "xxxxyyyyabklmopq" longest(a, b) -> "abcdefklmopqwxy"
+a = "abcdefghijklmnopqrstuvwxyz" longest(a, a) -> "abcdefghijklmnopqrstuvwxyz" ```
+
+
+def longest(a1, a2)
+  first_array = a1.split("")
+  second_array = a2.split("")
+  third_array = first_array.push(second_array).flatten.uniq.sort.join("")
+end
+
+
+
+The Western Suburbs Croquet Club has two categories of membership, Senior and Open. They would like your help with an application form that will tell prospective members which category they will be placed.
+
+To be a senior, a member must be at least 55 years old and have a handicap greater than 7. In this croquet club, handicaps range from -2 to +26; the better the player the lower the handicap.
+
+Input
+Input will consist of a list of lists containing two items each. Each list contains information for a single potential member. Information consists of an integer for the person's age and an integer for the person's handicap.
+
+Note for F#: The input will be of (int list list) which is a List>
+
+Example Input
+[[18, 20],[45, 2],[61, 12],[37, 6],[21, 21],[78, 9]]
+Output
+Output will consist of a list of string values (in Haskell: Open or Senior) stating whether the respective member is to be placed in the senior or open category.
+
+Example Output
+["Open", "Open", "Senior", "Open", "Open", "Senior"]
+
+
+function openOrSenior(data){
+  var newArr = []
+  for (x = 0; x < data.length; x++) {
+      if ((data[x][0] >= 55) && (data[x][1] > 7)) {
+        newArr.push("Senior")
+      } else
+        newArr.push("Open")
+  } return newArr
+}
+
+
+Your task is to write function toLeetSpeak that converts a regular english sentence to Leetspeak.
+
+More about LeetSpeak You can read at wiki -> https://en.wikipedia.org/wiki/Leet
+
+Consider only uppercase letters (no lowercase letters, no numbers) and spaces.
+
+For example:
+
+toLeetSpeak("LEET") returns "1337"
+In this kata we use a simple LeetSpeak dialect. Use this alphabet:
+
+{
+  A : '@',
+  B : '8',
+  C : '(',
+  D : 'D',
+  E : '3',
+  F : 'F',
+  G : '6',
+  H : '#',
+  I : '!',
+  J : 'J',
+  K : 'K',
+  L : '1',
+  M : 'M',
+  N : 'N',
+  O : '0',
+  P : 'P',
+  Q : 'Q',
+  R : 'R',
+  S : '$',
+  T : '7',
+  U : 'U',
+  V : 'V',
+  W : 'W',
+  X : 'X',
+  Y : 'Y',
+  Z : '2'
+}
+
+
+function toLeetSpeak(str) {
+  var dictionary = {
+  A : '@',
+  B : '8',
+  C : '(',
+  D : 'D',
+  E : '3',
+  F : 'F',
+  G : '6',
+  H : '#',
+  I : '!',
+  J : 'J',
+  K : 'K',
+  L : '1',
+  M : 'M',
+  N : 'N',
+  O : '0',
+  P : 'P',
+  Q : 'Q',
+  R : 'R',
+  S : '$',
+  T : '7',
+  U : 'U',
+  V : 'V',
+  W : 'W',
+  X : 'X',
+  Y : 'Y',
+  Z : '2'
+}
+  var final = ""
+  for (var i=0; i<str.length; i++) {
+    if (str[i] === " ") {
+      final += " "
+    } else {
+    final += dictionary[str[i]]
+    }
+  }
+  return final
+}
+
+
+Your task is to write function findSum.
+
+Upto and including n, this function will return the sum of all multiples of 3 and 5.
+
+For example:
+
+findSum(5) should return 8 (3 + 5)
+
+findSum(10) should return 33 (3 + 5 + 6 + 9 + 10)
+
+
+def find(n)
+  total = 0
+  i = 0
+  until i > n
+    if (i % 3 == 0) || (i % 5 == 0)
+      total += i
+    end
+  i += 1
+  end
+  total
+end
+
+
+An isogram is a word that has no repeating letters, consecutive or non-consecutive. Implement a function that determines whether a string that contains only letters is an isogram. Assume the empty string is an isogram. Ignore letter case.
+
+isIsogram( "Dermatoglyphics" ) == true
+isIsogram( "aba" ) == false
+isIsogram( "moOse" ) == false // -- ignore letter case
+
+
+def is_isogram(string)
+  array = string.downcase.split("")
+  i = 0
+  until i > array.length - 1
+    truth_counter = 0
+    j = 0
+    until j > array.length - 1
+      if array[i] == array[j]
+        truth_counter += 1
+        p truth_counter
+      end
+    j += 1
+    end
+    if truth_counter > 1
+      return false
+    end
+  i += 1
+  end
+  return true
+end
+
+
+
+Task:
+Your task is to write a function which returns the sum of following series upto nth term(parameter).
+
+Series: 1 + 1/4 + 1/7 + 1/10 + 1/13 + 1/16 +...
+Rules:
+You need to round the answer to 2 decimal places and return it as String.
+
+If the given value is 0 then it should return 0.00
+
+You will only be given Natural Numbers as arguments.
+
+Examples:
+SeriesSum(1) => 1 = "1.00"
+SeriesSum(2) => 1 + 1/4 = "1.25"
+SeriesSum(5) => 1 + 1/4 + 1/7 + 1/10 + 1/13 = "1.57"
+NOTE: In PHP the function is called series_sum().
+
+
+function SeriesSum(n)
+{
+ var sum = 0
+ for(x = 0; x < n; x++) {
+   sum += 1 / (3 * x + 1)
+   } return sum.toFixed(2)
+}
+
+
+Write a function that takes an array of strings as an argument and returns a sorted array containing the same strings, ordered from shortest to longest.
+
+For example, if this array were passed as an argument:
+
+["Telescopes", "Glasses", "Eyes", "Monocles"]
+
+Your function would return the following array:
+
+["Eyes", "Glasses", "Monocles", "Telescopes"]
+
+All of the strings in the array passed to your function will be different lengths, so you will not have to decide how to order multiple strings of the same length.
+
+
+function sortByLength (array) {
+  return array.sort((a, b) => a.length - b.length)
+};
+
+
+Write a function named sumDigits which takes a number as input and returns the sum of the absolute value of each of the number's decimal digits. For example:
+
+  sumDigits(10);  // Returns 1
+  sumDigits(99);  // Returns 18
+  sumDigits(-32); // Returns 5
+Let's assume that all numbers in the input will be integer values.
+
+
+def sumDigits(number)
+  if number < 0
+    positive = (number * -1).to_s
+  else
+    positive = (number).to_s
+  end
+  total = 0
+  i = 0
+  until i > positive.length
+    total += positive[i].to_i
+    i += 1
+  end
+  return total
+end
+
+
+We need to write some code to return the original price of a product, the return type must be of type decimal and the number must be rounded to two decimal places.
+
+We will be given the sale price (discounted price), and the sale percentage, our job is to figure out the original price.
+
+For example:
+Given an item at $75 sale price after applying a 25% discount, the function should return the original price of that item before applying the sale percentage, which is ($100.00) of course, rounded to two decimal places.
+
+DiscoverOriginalPrice(75, 25) => 100.00M where 75 is the sale price (discounted price), 25 is the sale percentage and 100 is the original price
+
+
+function discoverOriginalPrice(discountedPrice, salePercentage){
+  return +(discountedPrice / (1 - salePercentage / 100)).toFixed(2);
+  
+  }
+
+
+Write a program to find count of the most frequent item of an array.
+
+Assume that input is array of integers.
+
+Ex.:
+
+input array: [3, -1, -1, -1, 2, 3, -1, 3, -1, 2, 4, 9, 3]
+ouptut: 5
+Most frequent number in example array is -1. It occurs 5 times in input array.
+
+
+function mostFrequentItemCount(collection) {
+  var count = {}
+  for (i=0; i<collection.length; i++) {
+    if (count[collection[i]]) {
+      count[collection[i]] += 1
+    } else {
+      count[collection[i]] = 1
+    }
+  }
+  var output = 0
+  Object.keys(count).forEach(function(keys) {
+    if (count[keys] > output) {
+      output = count[keys]
+    }
+  })
+  return output
+}
+
+
+Every week (Friday and Saturday night), the farmer and his son count amount of sheep returned to the yard of their farm.
+
+They count sheep on Friday night, the same goes for Saturday (suppose that sheep returned on Friday are not feeding back on hills on Saturday).
+
+As sheep are not coming in one flock, you will be given two arrays (one for each night) representing number of sheep as they were returning to the yard during the evenings (entries are positive ints, higher than zero).
+
+Farmer and his son know the total amount of their sheep, you will be given this number as third parameter.
+
+Your goal is to calculate the amount of sheep lost (not returned) to the farm after Saturday night counting.
+
+Example 1: Input: {1, 2}, {3, 4}, 15 --> Output: 5
+
+Example 2: Input: {3, 1, 2}, {4, 5}, 21 --> Output: 6
+
+Good luck! :-)
+
+
+def lost_sheep(friday,saturday,total)
+  big_array = friday + saturday
+  sum = 0
+  i = 0
+  until i > big_array.length - 1
+    sum += big_array[i]
+  i += 1
+  end
+  return total - sum
+end
+
+
+You have an array of numbers 1 through n (where 1 <= n <= 10). The array needs to be formatted correctly for the person reading the countdown of a spaceship launch.
+
+Unfortunately, the person reading the countdown only knows how to read strings. After the array is sorted correctly make sure it's in a format he can understand.
+
+Between each number should be a space and after the final number (n) should be the word 'liftoff!'
+
+Example:
+
+// Given
+instructions = [8,1,10,2,7,9,6,3,4,5]
+// Should return
+"10 9 8 7 6 5 4 3 2 1 liftoff!"
+// Given
+instructions = [1,2,4,3,5]
+// Should return
+"5 4 3 2 1 liftoff!"
+
+function liftoff(instructions){
+  var final = ""
+  var sort_reverse = instructions.sort((a, b) => a - b).reverse()
+  for (i=0; i<sort_reverse.length; i++) {
+    final += sort_reverse[i]
+    final += " "
+  }
+  final += "liftoff!"
+  return final
+}
+
+
+When given a string of space separated words, return the word with the longest length. If there are multiple words with the longest length, return the last instance of the word with the longest length.
+
+Example:
+
+'red white blue' //returns string value of white
+
+'red blue gold' //returns gold
+
+
+
+def longest_word(string_of_words)
+  array_of_words = string_of_words.split(" ")
+  final = ""
+  i = 0
+  until i > array_of_words.length - 1
+    if array_of_words[i].length >= final.length
+      final = array_of_words[i]
+    end
+  i += 1
+  end
+  final
+end
+
+
+Help Suzuki rake his garden!
+
+The monastery has a magnificent Zen garden made of white gravel and rocks and it is raked diligently everyday by the monks. Suzuki having a keen eye is always on the lookout for anything creeping into the garden that must be removed during the daily raking such as insects or moss.
+
+You will be given a string representing the garden such as:
+
+garden = 'gravel gravel gravel gravel gravel gravel gravel gravel gravel rock slug ant gravel gravel snail rock gravel gravel gravel gravel gravel gravel gravel slug gravel ant gravel gravel gravel gravel rock slug gravel gravel gravel gravel gravel snail gravel gravel rock gravel snail slug gravel gravel spider gravel gravel gravel gravel gravel gravel gravel gravel moss gravel gravel gravel snail gravel gravel gravel ant gravel gravel moss gravel gravel gravel gravel snail gravel gravel gravel gravel slug gravel rock gravel gravel rock gravel gravel gravel gravel snail gravel gravel rock gravel gravel gravel gravel gravel spider gravel rock gravel gravel'
+Rake out any items that are not a rock or gravel and replace them with gravel such that:
+
+garden = 'slug spider rock gravel gravel gravel gravel gravel gravel gravel'
+Returns a string with all items except a rock or gravel replaced with gravel:
+
+garden = 'gravel gravel rock gravel gravel gravel gravel gravel gravel gravel'
+
+def rake_garden(garden)
+  arrayed = garden.split(" ")
+  final = ""
+  i = 0
+  until i > arrayed.length - 1
+    if arrayed[i] != "gravel" && arrayed[i] != "rock"
+      final += "gravel "
+    else
+      final += arrayed[i] + " "
+    end
+  i += 1
+  end
+  final[0..-2]
+end
+
+
+Given a string and an array of integers representing indices, capitalize all letters at the given indices.
+
+For example:
+
+capitalize("abcdef",[1,2,5]) = "aBCdeF"
+capitalize("abcdef",[1,2,5,100]) = "aBCdeF". There is no index 100.
+The input will be a lowercase string with no spaces and an array of digits.
+
+Good luck!
+
+
+function capitalize(s,arr){
+  array = arr.sort(function(a,b) { return a - b; })
+  console.log(array)
+  final = ""
+  nums = 0
+  for (i=0;i<s.length;i++) {
+    if (i === array[nums]) {
+      final += s[i].toUpperCase()
+      nums += 1
+    } else {
+      final += s[i]
+    }
+  }
+  return final;
+};
+
+
+Complete the function/method so that it returns the url with anything after the anchor (#) removed.
+
+Examples:
+
+// returns 'www.codewars.com'
+removeUrlAnchor('www.codewars.com#about')
+
+// returns 'www.codewars.com?page=1' 
+removeUrlAnchor('www.codewars.com?page=1')
+
+
+def remove_url_anchor(url)
+  i = 0
+  final = ""
+  until i == url.length
+    if url[i] == "#"
+      return final
+    else
+      final += url[i]
+    end
+    i += 1
+  end
+  final
+end
+
+
+Remove HTML tags and return string without:
+1) <tag> and </tag>
+2) <tag/>
+3) <tag />
+4) html tags with attributes.
+Don't trim space, tab etc.
+
+You have to use regexp.
+
+Tests are using function:
+String.prototype.replace(your regexp, "")
+
+Have fun :)
+
+
+var reg = /<.+?>/g
+
+
+Training JS #40:
+Regular Expression--"|", "[]" and "()""
+
+In this lesson, we learn about "|", "[]" and "()".
+
+"|" means or. It is used between two or more character expressions, representing a selective match. /a|b/ can match character a or b, /a|b|c/ can match one of a b and c. Let's see some examples:
+
+var str="abc";
+console.log( str.match(/a|b/g) );    //output: [ 'a', 'b' ]
+console.log( str.match(/a|b|c/g) );  //output: [ 'a', 'b', 'c' ]
+console.log( str.match(/ab|c/g) );   //output: [ 'ab', 'c' ]
+console.log( str.match(/a|bc/g) );   //output: [ 'a', 'bc' ]
+We can see that it can be used not only for a single character. In fact, every part of it is a sub expression. Like this:
+
+var str="good wood food cat bat hat";
+console.log( str.match(/good|wood|food/g) ); //output: [ 'good', 'wood', 'food' ]
+console.log( str.match(/cat|bat|hat/g) );    //output: [ 'cat', 'bat', 'hat' ]
+Using () can turn a regular expression into a sub expression, as part of a complex regular expression. In the example above, the matching words have similar characteristics. "good", "wood", "food" all end up with "ood", "cat", "bat", "hat" all end up with "at". We can write regular expression like this:
+
+var str="good wood food cat bat hat";
+console.log( str.match(/(g|w|f)ood/g) ); //output: [ 'good', 'wood', 'food' ]
+console.log( str.match(/(c|b|h)at/g) );  //output: [ 'cat', 'bat', 'hat' ]
+() and | can be nested. Like this:
+
+var str="good wood food cat bat hat";
+console.log( str.match(/((g|w|f)ood)|((c|b|h)at)/g) );
+//output: [ 'good', 'wood', 'food', 'cat', 'bat', 'hat' ]
+() sub expressions can be used in combination with "?" "*" "+". See example:
+
+var str="ababcdcd";
+console.log( str.match(/(ab)*/g) );    //output: [ 'abab', '', '', '', '', '' ]
+console.log( str.match(/(ab)+/g) );    //output: [ 'abab' ]
+console.log( str.match(/(ab)?(cd)*/g) );  //output: [ 'ab', 'abcdcd', '' ]
+console.log( str.match(/(ab)?(cd)+/g) );  //output: [ 'abcdcd' ]
+The following example is used to determine if a word begins with "aeiou":
+
+function aAn(word){
+  return (/^(a|e|i|o|u)/i.test(word) ? "An " : "A ") + word;
+}
+console.log( aAn("apple"))  //output: An apple
+console.log( aAn("Apple"))  //output: An Apple
+console.log( aAn("egg"))    //output: An egg
+console.log( aAn("car"))    //output: A car
+If we want the regular expression in the above example to be more concise, maybe we need to learn []. [] can list some characters to form a character set. The example above can be written in this way:
+
+function aAn(word){
+  return (/^[aeiou]/i.test(word) ? "An " : "A ") + word;
+}
+console.log( aAn("apple"))  //output: An apple
+console.log( aAn("Apple"))  //output: An Apple
+console.log( aAn("egg"))    //output: An egg
+console.log( aAn("car"))    //output: A car
+If we want to match all the numbers, [0123456789] looks a little bit longer. We can use "-" in the [] indicates the range. [0-9] match numbers 0 to 9, [a-z] matches all lowercase letters, etc.. Let's see a classic example, used to verify the user name:
+
+//A correct user name should be: 
+//1.it can use letters, digits, and underscores
+//2.with a total length of 6-16 characters
+//3.beginning with the letter.
+function verify(username){
+  return /^[a-z][a-z0-9_]{5,15}$/i.test(username);
+}
+console.log( verify("myjinxin2015"))  //output: true
+console.log( verify("smile67"))       //output: true
+console.log( verify("GiacomoSorbi"))  //output: true
+console.log( verify("jhoffner"))      //output: true
+console.log( verify("g964") )         //output: false     username too short
+console.log( verify("matt c") )       //output: false     username contains space
+console.log( verify("My_name_is_ZozoFouchtra") )  //output: false   username too long
+In the example above, ^[a-z] matches a letter, [a-z0-9_]{5-15}$ matches 5-15 letters, digits, and underscores.
+
+If "^" appears in the first position of the [], it means that to match character which outside the character set. [^a] matches all characters but a, [^0-9] matches all characters but numbers, etc.. Let's see an example:
+
+var str="a1!b2@c3#d4$e5%";
+console.log( str.replace(/[^a-z]/g,""))  //output: abcde
+console.log( str.replace(/[^0-9]/g,""))  //output: 12345
+console.log( str.replace(/[^!@#$%]/g,""))  //output: !@#$%
+Ok, lesson is over. let's us do some task.
+
+#Task
+This time you need to write a regular expression that matches all URL contained in the string. 
+
+The rules:
+
+1) URL start with ```http:// or https://```
+
+2) URL end with ```.com``` or ```.net```
+
+3) The middle part of URL can use letters, numbers and dots
+
+4) Need to ignore case, and a string may contain multiple URLs
+
+5) Your regular expression name should be ```regex``` and your result should be a string array.
+
+Some examples:
+```
+"http://codewars.com".match(regex)
+should return [ 'http://codewars.com' ]    
+"http://www.codewars.com".match(regex)
+should return [ 'http://www.codewars.com' ]
+"HTTP://CODEWARS.COM".match(regex)
+should return [ 'HTTP://CODEWARS.COM' ]
+"https://www.codewars.com".match(regex)
+should return [ 'https://www.codewars.com' ]
+"http://www.codewars.net".match(regex)
+should return [ 'http://www.codewars.net' ]
+"1234http://www.codewars.comabcd".match(regex)
+should return [ 'http://www.codewars.com' ]
+"http://www.codewars1.com!@#$%http://www.codewars2.net".match(regex)
+should return [ 'http://www.codewars1.com', 'http://www.codewars2.net' ]
+"http://www.codewars.com.net".match(regex)
+should return [ 'http://www.codewars.com.net' ]
+"http://www.codewars.com.fak".match(regex)
+should return [ 'http://www.codewars.com' ]
+
+These examples should return null:
+"ftp://www.codewars.com".match(regex)
+"http://www.code#wars.com".match(regex)
+"http://wwwcodewarscom".match(regex)
+"http://www.codewars.org".match(regex)
+"http://www . codewars . com".match(regex)
+"http://mail@codewars.com".match(regex)
+```
+
+Hint: to match ```"/"``` and ```"."```, you should use ```"\/"``` and ```"\."``` 
+```"\"``` is the escape character, we will learn it in the next lesson.
+##Series:
+
+( ↑↑↑ Click the link above can get my newest kata list, Please add it to your favorites)
+
+#1: create your first JS function helloWorld
+#2: Basic data types--Number
+#3: Basic data types--String
+#4: Basic data types--Array
+#5: Basic data types--Object
+#6: Basic data types--Boolean and conditional statements if..else
+#7: if..else and ternary operator
+#8: Conditional statement--switch
+#9: loop statement --while and do..while
+#10: loop statement --for
+#11: loop statement --break,continue
+#12: loop statement --for..in and for..of
+#13: Number object and its properties
+#14: Methods of Number object--toString() and toLocaleString()
+#15: Methods of Number object--toFixed(), toExponential() and toPrecision()
+#16: Methods of String object--slice(), substring() and substr()
+#17: Methods of String object--indexOf(), lastIndexOf() and search()
+#18: Methods of String object--concat() split() and its good friend join()
+#19: Methods of String object--toUpperCase() toLowerCase() and replace()
+#20: Methods of String object--charAt() charCodeAt() and fromCharCode()
+#21: Methods of String object--trim() and the string template
+#22: Unlock new skills--Arrow function,spread operator and deconstruction
+#23: methods of arrayObject---push(), pop(), shift() and unshift()
+#24: methods of arrayObject---splice() and slice()
+#25: methods of arrayObject---reverse() and sort()
+#26: methods of arrayObject---map()
+#27: methods of arrayObject---filter()
+#28: methods of arrayObject---every() and some()
+#29: methods of arrayObject---concat() and join()
+#30: methods of arrayObject---reduce() and reduceRight()
+#31: methods of arrayObject---isArray() indexOf() and toString()
+#32: methods of Math---round() ceil() and floor()
+#33: methods of Math---max() min() and abs()
+#34: methods of Math---pow() sqrt() and cbrt()
+#35: methods of Math---log() and its family
+#36: methods of Math---kata author's lover:random()
+#37: Unlock new weapon---RegExp Object
+#38: Regular Expression--"^","$", "." and test()
+#39: Regular Expression--"?", "*", "+" and "{}"
+#40: Regular Expression--"|", "[]" and "()"
+#41: Regular Expression--"\"
+#42: Regular Expression--(?:), (?=) and (?!)
+FUNDAMENTALS
+
+Poweredby_qualified
+Solution:
+
+var regex=/*coding here..*/
+Sample Tests:
+
+    Test.assertSimilar("http://codewars.com".match(regex), [ 'http://codewars.com' ]);
+    Test.assertSimilar("http://www.codewars.com".match(regex), [ 'http://www.codewars.com' ]);
+    Test.assertSimilar("HTTP://CODEWARS.COM".match(regex), [ 'HTTP://CODEWARS.COM' ]);
+    Test.assertSimilar("https://www.codewars.com".match(regex), [ 'https://www.codewars.com' ]);
+    Test.assertSimilar("http://www.codewars.net".match(regex), [ 'http://www.codewars.net' ]);
+    Test.assertSimilar("1234http://www.codewars.comabcd".match(regex), [ 'http://www.codewars.com' ]);
+    Test.assertSimilar("http://www.codewars1.com!@#$%http://www.codewars2.net".match(regex), [ 'http://www.codewars1.com', 'http://www.codewars2.net' ]);
+    Test.assertSimilar("http://www.codewars1.comabchttp://www.codewars2.net".match(regex), [ 'http://www.codewars1.com', 'http://www.codewars2.net' ]);
+    Test.assertSimilar("http://www.codewars.com.net".match(regex), [ 'http://www.codewars.com.net' ]);
+    Test.assertSimilar("http://www.codewars.com.fak".match(regex), [ 'http://www.codewars.com' ]);
+    
+    Test.assertSimilar("ftp://www.codewars.com".match(regex),null);
+    Test.assertSimilar("http://www.code#wars.com".match(regex),null);
+    Test.assertSimilar("http://www.codewars.org".match(regex),null);
+    Test.assertSimilar("http://www . codewars . com".match(regex),null);
+    Test.assertSimilar("http://mail@codewars.com".match(regex),null);
+    Test.assertSimilar("http://.com".match(regex), null);
+SKIPVIEW SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
+
+
+
+
+Description:
+At 'We Rate Dogs', we try our best to give dogs accurate ratings, which will always be above 10/10. Because they're good dogs. Over the weekend Bront has come in and hacked our system, lowering the ratings of dogs to below 10/10. Please help to fix Brant's bad system and give the dogs their original ratings. They're good dogs Brent.
+
+Task:
+The function weRateDogs(str, rating) takes a string and an integer as the inputs. Within the string is an incorrect rating x/y.
+
+You will need to change the incorrect rating x/y to the correct rating rating/10. The given string may contain numbers and letters, but no special characters other than /.
+
+For example:
+if you are given the following string:
+'This is Max99. She has one ear that is always s1ightly higher than the other 4/10 wonky af'
+And the following rating: 11 return: 'This is Max99. She has one ear that is always s1ightly heigher than the other 11/10 wonky af'
+
+
+function weRateDogs(str, rating){
+  var ratingRegex = /[0-9]+\/[0-9]+/
+  return str.replace(ratingRegex, rating + "/10")
+}
+
+
+To pass the series of gates guarded by the owls, Kenneth needs to present them each with a highly realistic portrait of one. Unfortunately, he is absolutely rubbish at drawing, and needs some code to return a brand new portrait with a moment's notice.
+
+All owl heads look like this:
+
+''0v0''
+Such beautiful eyes! However, they differ in their plumage, which is always symmetrical, eg.:
+
+   VVHVAV''0v0''VAVHVV
+or
+
+YYAYAH8XH''0v0''HX8HAYAYY
+So Kenneth needs a method that will take a garble of text generated by mashing at his keyboard (numbers and letters, but he knows how to avoid punctuation etc.) for a bit and give him a symmetrical owl with a lovely little face, with a truly symmetrical plumage made of uppercase letters and numbers.
+
+(To be clear, the acceptable characters for the plumage are 8,W,T,Y,U,I,O,A,H,X,V and M.)
+
+
+function owlPic(text){
+  var left = text.match(/[8WTYUIOAHXVM]/gi)
+  return left.join("").toUpperCase() + "''0v0''" + left.reverse().join("").toUpperCase()
+}
+
+
+Description:
+You are playing a simple slot machine that only contains exclamation marks and question marks. Every time the slot machine is started, a string of 5 length is obtained. If you're lucky enough to get a Special permutation, you'll win the bonus. Give you a string s, return the highest bonus.
+
+Bouns list:
+
+ Five-of-a-Kind:   ---- 1000
+ "!!!!!" or "?????"
+
+ Four-of-a-Kind:    ---- 800
+ The string contains a "!!!!" or "????"
+ "!!!!?","?!!!!","????!","!????"
+
+ Full House:         ----500
+ such as "!!!??" or "???!!"...
+
+ Three-of-a-Kind:    ---- 300
+ The string contains a "!!!" or "???"
+ such as "!!!?!","!???!"...
+
+ Two pair:           ---- 200
+ The string contains two "!!" or "??"
+ such as "??!!?","!!?!!"
+
+ A Pair:             ---- 100
+ The string contains a "!!" or "??"
+ such as "?!??!","!!?!?"
+
+ Others              ---- 0
+ such as "?!?!?","!?!?!"
+Examples
+slot("!!!!!") === 1000
+slot("!!!!?") === 800
+slot("!!!??") === 500
+slot("!!!?!") === 300
+slot("!!?!!") === 200
+slot("!!?!?") === 100
+slot("!?!?!") === 0
+
+
+function slot(s){
+  var fiveKind = /^(!!!!!|\?\?\?\?\?)$/
+  if (fiveKind.test(s)) {
+    return 1000
+  }
+  var fourKind = /^.?(!!!!|\?\?\?\?).?$/
+  if (fourKind.test(s)) {
+    return 800
+  }
+  var fullHouse = /^(\?\?\?!!|!!!\?\?|!!\?\?\?|\?\?!!!)$/
+  if (fullHouse.test(s)) {
+    return 500
+  }
+  var threeKind = /^.?.?(!!!|\?\?\?).?.?$/
+  if (threeKind.test(s)) {
+    return 300
+  }
+  var twoPair = /.?(!!|\?\?).?(!!|\?\?).?/g
+  if (twoPair.test(s)) {
+    return 200
+  }
+  var aPair = /(!!|\?\?)/
+  if (aPair.test(s)) {
+    return 100
+  }
+  return 0
+}
+Solution:
+
+function slot(s){
+  //coding and coding....
+  
+  
+}
+Sample Tests:
+
+describe("Basic Tests", function(){
+  it("It should works for basic tests", function(){
+​
+Test.assertSimilar(slot("!!!!!") , 1000)
+Test.assertSimilar(slot("!!!!?") , 800)
+Test.assertSimilar(slot("!!!??") , 500)
+Test.assertSimilar(slot("!!!?!") , 300)
+Test.assertSimilar(slot("!!?!!") , 200)
+Test.assertSimilar(slot("!!?!?") , 100)
+Test.assertSimilar(slot("!?!?!") , 0)
+​
+})})
+SKIPVIEW SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
+
+
+
+Very simple, given a number, find its opposite.
+
+Examples:
+
+1: -1
+14: -14
+-34: 34
+But can you do it in 1 line of code and without any conditionals?
+
+
+function opposite(number) {
+  return (number * -1)
+}
+
+
+The code does not execute properly. Try to figure out why.
+
+function multiply(a, b){
+  return a * b
+}
+
+
+Create a function with two arguments that will return a list of length (n) with multiples of (x).
+
+Assume both the given number and the number of times to count will be positive numbers greater than 0.
+
+Return the results as an array (or list in Python, Haskell or Elixir).
+
+Examples:
+
+countBy(1,10) === [1,2,3,4,5,6,7,8,9,10]
+countBy(2,5) === [2,4,6,8,10]
+
+
+def count_by(x, n)
+  tracker = []
+  count = 1
+  until count == n + 1
+    tracker << (x * count)
+    count += 1
+  end
+  tracker
+end
+
+In this simple assignment you are given a number and have to make it negative. But maybe the number is already negative?
+
+Example:
+
+makeNegative(1); // return -1
+makeNegative(-5); // return -5
+makeNegative(0); // return 0
+Notes:
+
+The number can be negative already, in which case no change is required.
+Zero (0) can't be negative, see examples above.
+
+def makeNegative(num)
+  if num > 0
+    (num * -1)
+  else
+    num
+  end
+end
+
+Can you find the needle in the haystack?
+
+Write a function findNeedle() that takes an array full of junk but containing one "needle"
+
+After your function finds the needle it should return a message (as a string) that says:
+
+"found the needle at position " plus the index it found the needle
+
+So
+
+find_needle(['hay', 'junk', 'hay', 'hay', 'moreJunk', 'needle', 'randomJunk'])
+find_needle(['hay', 'junk', 'hay', 'hay', 'moreJunk', 'needle', 'randomJunk'])
+findNeedle(['hay', 'junk', 'hay', 'hay', 'moreJunk', 'needle', 'randomJunk'])
+findNeedle(new Object[] {"hay", "junk", "hay", "hay", "moreJunk", "needle", "randomJunk"})
+find_needle(["hay", "junk", "hay", "hay", "moreJunk", "needle", "randomJunk"])
+should return
+
+'found the needle at position 5'
+'found the needle at position 5'
+'found the needle at position 5'
+"found the needle at position 5"
+"found the needle at position 5"
+
+
+function findNeedle(haystack) {
+  var found = "found the needle at position " + haystack.indexOf("needle")
+  return found
+}
+
+
+Write function RemoveExclamationMarks which removes all exclamation marks from a given string.
+
+
+function removeExclamationMarks(s) {
+  var string = s.replace(/!/g, "");
+  
+  return string;
+}
+
+
+We need a function that can transform a number into a string.
+
+What ways of achieving this do you know?
+
+Examples:
+numberToString(123); // returns '123';`   
+numberToString(999); // returns '999';`
+
+
+function numberToString(num) {
+  var string = ""
+  return string += num
+} 
+
+
+Write a function called repeatStr which repeats the given string string exactly n times.
+
+repeatStr(6, "I") // "IIIIII"
+repeatStr(5, "Hello") // "HelloHelloHelloHelloHello"
+
+
+function repeatStr (n, s) {
+  return s.repeat(n)
+}
+
+
+Very simple, given a number, find its opposite.
+
+Examples:
+
+1: -1
+14: -14
+-34: 34
+But can you do it in 1 line of code and without any conditionals?
+
+function opposite(number) {
+  return (number * -1)
+}
+
+Write function avg which calculates average of numbers in given list.
+
+function find_average(array) {
+  var sum = 0
+  for(x = 0; x < array.length; x++) {
+    sum += array[x]
+  } avg = sum / array.length
+  return avg;
+}
+
+
+You get an array of numbers, return the sum of all of the positives ones.
+
+Example [1,-4,7,12] => 1 + 7 + 12 = 20
+
+Note: array may be empty, in this case return 0.
+
+
+function positiveSum(arr) {
+  var sum = 0
+  for(x = 0; x < arr.length; x++) {
+    if (arr[x] > 0) {
+      sum += arr[x]
+        }
+    } return sum
+}
+
+
+You received a whatsup message from an unknown number. Could it be from that girl/boy with a foreign accent you met yesterday evening?
+
+Write a simple regex to check if the string contains the word hallo in different languages.
+
+These are the languages of the possible people you met the night before:
+
+hello - english
+ciao - italian
+salut - french
+hallo - german
+hola - spanish
+ahoj - czech republic
+czesc - polish
+By the way, how cool is the czech republic hallo!!
+
+PS. you can assume the input is a string. PPS. to keep this a beginner exercise you don't need to check if the greeting is a subset of word ('Hallowen' can pass the test)
+
+PS. regex should be case insensitive to pass the tests
+
+
+function validateHello(greetings) {
+  res = /(hello|ciao|salut|hallo|hola|ahoj|czesc)/i.test(greetings)
+  return res
+}
+
+
+Given an array of integers.
+
+Return an array, where the first element is the count of positives numbers and the second element is sum of negative numbers.
+
+If the input array is empty or null, return an empty array:
+
+C#/Java: new int[] {} / new int[0];
+C++: std::vector<int>();
+JavaScript/CoffeeScript/PHP/Haskell: [];
+Rust: Vec::<i32>::new();
+ATTENTION!
+The passed array should NOT be changed. Read more here.
+
+For example:
+
+input [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15]
+return [10, -65].
+
+
+
+function countPositivesSumNegatives(input) {
+    if (input == null || input.length == 0)
+      return [];
+    
+    var positive = 0;
+    var negative = 0;
+    
+    for (var i=0, l=input.length; i<l; ++i)
+    {
+      if (input[i] > 0)
+        ++ positive;
+      else
+        negative += input[i];
+    }
+    
+    return [positive, negative];
+}
+
+
+Given a set of numbers, return the additive inverse of each. Each positive becomes negatives, and the negatives become positives.
+
+invert([1,2,3,4,5]) == [-1,-2,-3,-4,-5]
+invert([1,-2,3,-4,5]) == [-1,2,-3,4,-5]
+invert([]) == []
+You can assume that all values are integers.
+
+
+function invert(array) {
+   var newArr = []
+   for(x = 0; x < array.length; x++) {
+     if (array[x] == 0) {
+       newArr.push(0)
+       } else {
+     newArr.push(array[x] * -1)
+     }
+   }
+   return newArr;
+}
+
+
+Basic regex tasks. Write a function that takes in a numeric code of any lenght. The function will check if the code begins with 1, 2, or 3 and return true if so. Return false otherwise.
+
+You can assume the input will always be a nuber.
+
+
+function validateCode (code) {
+  return /^[123].*/.test(code)
+}
+
+
+Description:
+Remove all exclamation marks from sentence but ensure a exclamation mark at the end of string. For a beginner kata, you can assume that the input data is always a non empty string, no need to verify it.
+
+Examples
+remove("Hi!") === "Hi!"
+remove("Hi!!!") === "Hi!"
+remove("!Hi") === "Hi!"
+remove("!Hi!") === "Hi!"
+remove("Hi! Hi!") === "Hi Hi!"
+remove("Hi") === "Hi!"
+
+
+function remove(s){
+  var exRegex = /!/g
+  var answer = s.replace(exRegex, "")
+  return answer + "!"
+  
+}
+
+
+Complete the bool_to_word (PHP: boolToWord ) method.
+
+Given: a boolean value
+
+Return: a 'Yes' string for true and a 'No' string for false
+
+
+
+
+function boolToWord( bool ){
+  if ( bool ) {
+  return "Yes"
+  } 
+  
+  return "No"
+  
+} 
+
+
+
+The code provided is supposed replace all the dots . in the specified String str with dashes -
+
+But it's not working properly.
+
+Task
+Fix the bug so we can all go home early.
+
+Notes
+String str will never be null.
+
+
+var replaceDots = function(str) {
+  return str.replace(/\./g, '-');
+}
+
+
+Your task is to create a function - basic_op().
+
+The function should take three arguments - operation(string/char), value1(number), value2(number). The function should return result of numbers after applying the chosen operation.
+
+Examples:
+
+basicOp('+', 4, 7)         // Output: 11
+basicOp('-', 15, 18)       // Output: -3
+basicOp('*', 5, 5)         // Output: 25
+basicOp('/', 49, 7)        // Output: 7
+
+
+def basic_op(operator, value1, value2)
+  if operator == "+"
+    value1 + value2
+  elsif operator == "-"
+    value1 - value2
+  elsif operator == "*"
+    value1 * value2
+  elsif operator == "/"
+    value1 / value2
+  end
+end
+
+
+Description:
+Remove a exclamation mark from the end of string. For a beginner kata, you can assume that the input data is always a string, no need to verify it.
+
+Examples
+remove("Hi!") === "Hi"
+remove("Hi!!!") === "Hi!!"
+remove("!Hi") === "!Hi"
+remove("!Hi!") === "!Hi"
+remove("Hi! Hi!") === "Hi! Hi"
+remove("Hi") === "Hi"
+Note
+Please don't post issue about difficulty or duplicate.
+
+
+function remove(s){
+  var final = s.replace(/!$/, "")
+  return final
+}
+
+
+Summation
+Write a program that finds the summation of every number between 1 and num. The number will always be a positive integer greater than 0.
+
+For example:
+
+summation(2) -> 3
+1 + 2
+
+summation(8) -> 36
+1 + 2 + 3 + 4 + 5 + 6 + 7 + 8
+
+
+var summation = function (num) {
+  var sum = 0
+    for(x = 1; x <= num; x++) {
+    sum += x
+    } return sum
+} 
+
+
+
+Write a function powersOfTwo which will return list of all powers of 2 from 0 to n (where n is an exponent).
+
+E.g:
+
+n = 0 -> 2^0 -> [1]
+
+n = 1 -> 2^0, 2^1 -> [1,2]
+
+n = 2 -> 2^0, 2^1, 2^2 -> [1,2,4]
+
+
+
+
+def powers_of_two(n)
+  total = []
+  count = 0
+  until count == n + 1
+    total << (2**count)
+    count += 1
+  end
+  total
+end
+def powers_of_two(n)
+  (0..n).map do |it|
+    2**it
+  end
+end
+
+
+
+
+The cockroach is one of the fastest insects. Write a function which takes its speed in km per hour and returns it in cm per second, rounded down to the integer (= floored).
+
+For example:
+
+cockroachSpeed(1.08) == 30
+Note! The input is a Real number (actual type is language dependent) and is >= 0. The result should be an Integer.
+
+
+
+def cockroach_speed(s)
+  (((s * 100000) / 60) / 60).floor
+end
+
+
+
+Your task is to make two functions, max and min (maximum and minimum in PHP) that take a(n) array/vector of integers list as input and outputs, respectively, the largest and lowest number in that array/vector.
+
+#Examples
+
+max([4,6,2,1,9,63,-134,566]) returns 566
+min([-52, 56, 30, 29, -54, 0, -110]) returns -110
+max([5]) returns 5
+min([42, 54, 65, 87, 0]) returns 0
+#Notes
+
+You may consider that there will not be any empty arrays/vectors.
+
+
+
+def min(list)
+  sorted_list = list.sort
+  return sorted_list[0]
+end
+
+def max(list)
+  reverse_sorted_list = list.sort.reverse
+  return reverse_sorted_list[0]
+end
+
+
+Description:
+Remove n exclamation marks in the sentence from left to right. n is positive integer.
+
+Examples
+remove("Hi!",1) === "Hi"
+remove("Hi!",100) === "Hi"
+remove("Hi!!!",1) === "Hi!!"
+remove("Hi!!!",100) === "Hi"
+remove("!Hi",1) === "Hi"
+remove("!Hi!",1) === "Hi!"
+remove("!Hi!",100) === "Hi"
+remove("!!!Hi !!hi!!! !hi",1) === "!!Hi !!hi!!! !hi"
+remove("!!!Hi !!hi!!! !hi",3) === "Hi !!hi!!! !hi"
+remove("!!!Hi !!hi!!! !hi",5) === "Hi hi!!! !hi"
+remove("!!!Hi !!hi!!! !hi",100) === "Hi hi hi"
+Note
+Please don't post issue about difficulty or duplicate.
+
+
+
+
+function remove(s,n){
+  var exRegex = /!/
+  var answer = s
+  for (var i = 0; i < n; i++) {
+    answer = answer.replace(exRegex, "")
+  }
+  return answer
+}
+
+
+
+Your task is simply to count the total number of lowercase letters in a string.
+
+Examples
+lowercaseCount("abc"); ===> 3
+
+lowercaseCount("abcABC123"); ===> 3
+
+lowercaseCount("abcABC123!@€£#$%^&*()_-+=}{[]|\':;?/>.<,~"); ===> 3
+
+lowercaseCount(""); ===> 0;
+
+lowercaseCount("ABC123!@€£#$%^&*()_-+=}{[]|\':;?/>.<,~"); ===> 0
+
+lowercaseCount("abcdefghijklmnopqrstuvwxyz"); ===> 26
+
+
+
+function lowercaseCount(str){
+  var lowerRegexp = /[a-z]/g
+  if (str.match(lowerRegexp)) {
+    return (str.match(lowerRegexp)).length
+  } else {
+    return 0
+  }
+}
+
+
+Numbers ending with zeros are boring.
+
+They might be fun in your world, but not here.
+
+Get rid of them. Only the ending ones.
+
+1450 -> 145
+960000 -> 96
+1050 -> 105
+-1050 -> -105
+Zero alone is fine, don't worry about it. Poor guy anyway
+
+
+
+function noBoringZeros(n) {
+  if (n === 0) {
+    return 0
+  } else {
+    var string = String(n)
+    string = string.replace(/0*$/g, "")
+    return Number(string)
+  }
+}
+
+
+
+Write a simple regex to validate a username.
+
+Allowed characters are:
+
+-lowercase letters -numbers -underscore
+
+length shoould be between 4 and 16 characters.
+
+
+function validateUsr(username) {
+  res =  /^[a-z0-9_]{4,16}$/.test(username) 
+  return res
+}
+
+
+Implement String#digit? (in Java StringUtils.isDigit(String)), which should return true if given object is a digit (0-9), false otherwise.
+
+
+
+String.prototype.digit = function() {
+  var numRegexp = /^[0-9]$/
+  return numRegexp.test(this)
+};
+
+
+You probably know the 42 number as "The answer to life, the universe and everything" according to Douglas Adams' "The Hitchhiker's Guide to the Galaxy". For Freud, the answer was quite different.
+
+In the society he lived in, people-women in particular- had to repress their sexual needs and desires. This was simply how the society was at the time. Freud then wanted to study the illnesses created by this, and so he digged to the root of their desires. This led to some of the most important psychoanalytic theories to this day, Freud being the father of psychoanalysis.
+
+Now, basically, when a person hears about Freud, s/he hears "sex" because for Freud, everything was basically related to, and explained by sex.
+
+In this kata, the toFreud() function will take a string as its argument, and return a string with every word replaced by the explanation to everything, according to Freud. Note that an empty string, or no arguments, should result in the ouput being ""(empty string).
+
+
+function toFreud(string) {
+  return string.replace(/[a-zA-Z']+/g, "sex")
+}
+
+
+Deoxyribonucleic acid, DNA is the primary information storage molecule in biological systems. It is composed of four nucleic acid bases Guanine ('G'), Cytosine ('C'), Adenine ('A'), and Thymine ('T').
+
+Ribonucleic acid, RNA, is the primary messenger molecule in cells. RNA differs slightly from DNA its chemical structure and contains no Thymine. In RNA Thymine is replaced by another nucleic acid Uracil ('U').
+
+Create a funciton which translates a given DNA string into RNA.
+
+For example:
+
+DNAtoRNA("GCAT") returns ("GCAU")
+
+
+
+def DNAtoRNA(dna)
+  final = ""
+  i=0
+  while i < dna.length do
+    if dna[i] == "T"
+      final += "U"
+    else
+      final += dna[i]
+    end
+  i += 1
+  end
+  return final
+end
+
+
+An AI has infected a text with a character!!
+
+This text is now fully mutated to this character.
+
+If the text or the character are empty, return an empty string.
+There never will be a case when both are empty as nothing is going on!!
+
+The character is a string. It will always be of length 1 if it's not empty.
+
+Example:
+
+before = "abc"
+character = "z"
+after = "zzz"
+
+
+function contamination(text, char){
+  if (text === "" || char === "") {
+    return ""
+  } else {
+    return text.replace(/./g, char)
+  }
+}
+
+
+Description:
+Remove all exclamation marks from the end of sentence.
+
+Examples
+remove("Hi!") === "Hi"
+remove("Hi!!!") === "Hi"
+remove("!Hi") === "!Hi"
+remove("!Hi!") === "!Hi"
+remove("Hi! Hi!") === "Hi! Hi"
+remove("Hi") === "Hi"
+Note
+Please don't post issue about difficulty or duplicate.
+
+
+function remove(s){
+  var exRegex = /!*$/
+  var answer = s.replace(exRegex, "")
+  return answer
+}
+
+
+Create a function called shortcut to remove all the lowercase vowels in a given string.
+
+Examples
+shortcut("codewars") // --> cdwrs
+shortcut("goodbye")  // --> gdby
+Don't worry about uppercase vowels.
+
+
+function shortcut(string){
+  var final = string.replace(/[aeiou]/g, "")
+  return final
+}
+
+
+Description:
+Replace all vowel to exclamation mark in the sentence. aeiouAEIOU is vowel.
+
+Examples
+replace("Hi!") === "H!!"
+replace("!Hi! Hi!") === "!H!! H!!"
+replace("aeiou") === "!!!!!"
+replace("ABCDE") === "!BCD!"
+Note
+Please don't post issue about difficulty or duplicate. Because:
+
+That's unfair on the kata creator. This is a valid kata and introduces new people to javascript some regex or loops, depending on how they tackle this problem. --matt c
+
+function replace(s){
+  var final = s.replace(/[aeiouAEIOU]/g, "!")
+  return final
+}
+
+
+
+Write a function which removes from string all non-digit characters and parse the remaining to number. E.g: "hell5o wor6ld" -> 56
+
+Function:
+
+####javascript
+
+getNumberFromString(s)
+####ruby
+
+get_number_from_string(s)
+####CSharp
+
+GetNumberFromString(string s)
+
+function getNumberFromString(s) {
+  var numRegex = /[0-9]+/g
+  var answer = s.match(numRegex)
+  return Number(answer.join(""))
+}
+
 
