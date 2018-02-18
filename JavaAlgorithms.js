@@ -1757,4 +1757,939 @@ end
 
 
 
+The idea for this Kata came from 9gag today.here
+
+You'll have to translate a string to Pilot's alphabet (NATO phonetic alphabet) wiki.
+
+Like this:
+
+Input: If you can read
+
+Output: India Foxtrot Yankee Oscar Uniform Charlie Alfa November Romeo Echo Alfa Delta
+
+Some notes
+
+Keep the punctuation, and remove the spaces.
+Use Xray without dash or space.
+Reference
+
+alt text
+
+You can use the NATO hash with the alphabet
+
+
+
+def to_nato(words)
+	alphabet = { "A" => "Alfa", "B" => "Bravo", "C" => "Charlie", "D" => "Delta", "E" => "Echo", "F" => "Foxtrot", "G" => "Golf",
+"H"	=> "Hotel",
+"I" => "India",
+"J"	=> "Juliett",
+"K"	=> "Kilo",
+"L"	=> "Lima",
+"M"	=> "Mike",
+"N"	=> "November",
+"O"	=> "Oscar",
+"P"	=> "Papa",
+"Q"	=> "Quebec",
+"R"	=> "Romeo",
+"S"	=> "Sierra",
+"T"	=> "Tango",
+"U"	=> "Uniform",
+"V"	=> "Victor",
+"W"	=> "Whiskey",
+"X"	=> "Xray",
+"Y"	=> "Yankee",
+"Z" => "Zulu" }
+
+  final = ""
+  i = 0
+  until i > words.length - 1
+    if words[i] != " "
+      if alphabet[words[i].upcase]
+        final += alphabet[words[i].upcase] + " "
+      else
+        final += words[i] + " "
+      end
+    end
+  i += 1
+  end
+  if final[-1] == " "
+    return final[0..-2]
+  else
+    return final
+  end
+end
+Solution:
+
+function to_nato(words) {
+  // Go code
+}
+Sample Tests:
+
+// TODO: Replace examples and use TDD development by writing your own tests
+​
+// These are some CW specific test methods available:
+//    Test.expect(boolean, [optional] message)
+//    Test.assertEquals(actual, expected, [optional] message)
+//    Test.assertSimilar(actual, expected, [optional] message)
+//    Test.assertNotEquals(actual, expected, [optional] message)
+​
+// NodeJS assert is also automatically required for you.
+//    assert(true)
+//    assert.strictEqual({a: 1}, {a: 1})
+//    assert.deepEqual({a: [{b: 1}]}, {a: [{b: 1}]})
+​
+// You can also use Chai (http://chaijs.com/) by requiring it yourself
+// var expect = require("chai").expect;
+// var assert = require("chai").assert;
+// require("chai").should();
+SKIPUNLOCK SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
+
+
+
+There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
+
+The function has two input variables:
+
+customers: an array (list in python) of positive integers representing the queue. Each integer represents a customer, and its value is the amount of time they require to check out.
+n: a positive integer, the number of checkout tills.
+The function should return an integer, the total time required.
+
+EDIT: A lot of people have been confused in the comments. To try to prevent any more confusion:
+
+There is only ONE queue, and
+The order of the queue NEVER changes, and
+Assume that the front person in the queue (i.e. the first element in the array/list) proceeds to a till as soon as it becomes free.
+The diagram on the wiki page I linked to at the bottom of the description may be useful.
+So, for example:
+
+queueTime([5,3,4], 1)
+// should return 12
+// because when n=1, the total time is just the sum of the times
+
+queueTime([10,2,3,3], 2)
+// should return 10
+// because here n=2 and the 2nd, 3rd, and 4th people in the 
+// queue finish before the 1st person has finished.
+
+queueTime([2,3,10], 2)
+// should return 12
+N.B. You should assume that all the test input will be valid, as specified above.
+
+P.S. The situation in this kata can be likened to the more-computer-science-related idea of a thread pool, with relation to running multiple processes at the same time: https://en.wikipedia.org/wiki/Thread_pool
+
+
+def queue_time(customers, n)
+  total = 0
+  until customers.length == 0
+    if customers.length >= n
+      amount = n
+    else
+      amount = customers.length
+    end
+    i = 0
+    until i > amount - 1
+      if customers[i]
+        customers[i] -= 1
+      end
+    i += 1
+    end
+    customers.delete(0)
+    total += 1
+  end
+  return total
+end
+
+
+Write Number in Expanded Form
+You will be given a number and you will need to return it as a string in Expanded Form. For example:
+
+expandedForm(12); // Should return '10 + 2'
+expandedForm(42); // Should return '40 + 2'
+expandedForm(70304); // Should return '70000 + 300 + 4'
+NOTE: All numbers will be whole numbers greater than 0.
+
+If you liked this kata, check out part 2!!
+
+
+
+def expanded_form(num)
+  use_me = num.to_s
+  i = 0
+  final = ""
+  until i > use_me.length - 1
+    if use_me[i] != "0"
+      final += use_me[i]
+        j = i + 1
+        until j > use_me.length - 1
+          final += "0"
+        j += 1
+        end
+      final += " + "
+    end
+  i += 1
+  end
+  final[0..-4]
+end
+
+
+
+A string is considered to be in title case if each word in the string is either (a) capitalised (that is, only the first letter of the word is in upper case) or (b) considered to be an exception and put entirely into lower case unless it is the first word, which is always capitalised.
+
+Write a function that will convert a string into title case, given an optional list of exceptions (minor words). The list of minor words will be given as a string with each word separated by a space. Your function should ignore the case of the minor words string -- it should behave in the same way even if the case of the minor word string is changed.
+
+###Arguments (Haskell)
+
+First argument: space-delimited list of minor words that must always be lowercase except for the first word in the string.
+Second argument: the original string to be converted.
+###Arguments (Other languages)
+
+First argument (required): the original string to be converted.
+Second argument (optional): space-delimited list of minor words that must always be lowercase except for the first word in the string. The JavaScript/CoffeeScript tests will pass undefined when this argument is unused.
+###Example
+
+titleCase('a clash of KINGS', 'a an the of') // should return: 'A Clash of Kings'
+titleCase('THE WIND IN THE WILLOWS', 'The In') // should return: 'The Wind in the Willows'
+titleCase('the quick brown fox') // should return: 'The Quick Brown Fox'
+
+
+function titleCase(title, minorWords) {
+  if (title === "") {
+    return ""
+  }
+  final = ""
+  if (minorWords) {
+    notMe = minorWords.toLowerCase().split(" ")
+  } else {
+    notMe = []
+  }
+  arrayed = title.toLowerCase().split(" ")
+  for (i=0; i<arrayed.length; i++) {
+    if (i===0) {
+      final += arrayed[i][0].toUpperCase() + arrayed[i].substring(1, arrayed[i].length) + " "
+    } else {
+      counter = 0
+      for (j=0; j<notMe.length; j++) {
+        if (notMe[j] === arrayed[i]) {
+          counter += 1
+        }
+      }
+      if (counter === 0) {
+        final += arrayed[i][0].toUpperCase() + arrayed[i].substring(1, arrayed[i].length) + " "
+      } else {
+        final += arrayed[i] + " "
+      }
+    }
+  }
+  return final.substring(0, final.length-1)
+}
+
+
+
+You have to extract a portion of the file name as follows:
+
+Assume it will start with date represented as long number
+Followed by an underscore
+Youll have then a filename with an extension
+it will always have an extra extension at the end
+Inputs:
+1231231223123131_FILE_NAME.EXTENSION.OTHEREXTENSION
+
+1_This_is_an_otherExample.mpg.OTHEREXTENSIONadasdassdassds34
+
+1231231223123131_myFile.tar.gz2
+Outputs
+FILE_NAME.EXTENSION
+
+This_is_an_otherExample.mpg
+
+myFile.tar
+The recommend way to solve it is using RegEx and specifically groups.
+
+
+class FileNameExtractor
+    def self.extract_file_name(dirtyFileName)
+       indices = []
+       i = 0
+       dots = 0
+       date = true
+       until i > dirtyFileName.length
+         if date == true && dirtyFileName[i] == "_"
+           date = false
+           indices.push(i)
+         end
+         if dots == 1 && dirtyFileName[i] == "."
+           dots += 1
+           indices.push(i)
+         end
+         if dots == 0 && dirtyFileName[i] == "."
+           dots += 1
+         end
+       i += 1
+       end
+       return dirtyFileName[indices[0] + 1..indices[1] - 1]
+    end
+end
+Solution:
+
+class FileNameExtractor {
+    static extractFileName (dirtyFileName) {
+        return "show me the code!";
+    }
+}
+Sample Tests:
+
+Test.assertEquals(FileNameExtractor.extractFileName("1_FILE_NAME.EXTENSION.OTHEREXTENSIONadasdassdassds34"),"FILE_NAME.EXTENSION");
+Test.assertEquals(FileNameExtractor.extractFileName("1231231223123131_FILE_NAME.EXTENSION.OTHEREXTENSION"),"FILE_NAME.EXTENSION");
+SKIPUNLOCK SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
+
+
+
+"The Shell Game" involves three shells/cups/etc upturned on a playing surface, with a ball placed underneath one of them. The shells are then rapidly swapped round, and the game involves trying to track the swaps and, once they are complete, identifying the shell containing the ball.
+
+This is usually a con, but you can assume this particular game is fair...
+
+Your task is as follows. Given the shell that the ball starts under, and list of swaps, return the location of the ball at the end. All shells are indexed by the position they are in at the time.
+
+For example, given the starting position 0 and the swap sequence [(0, 1), (1, 2), (1, 0)]:
+
+The first swap moves the ball from 0 to 1
+The second swap moves the ball from 1 to 2
+The final swap doesn't affect the position of the ball.
+
+So
+
+swaps = [[0,1], [1,2], [1, 0]]
+find_the_ball(0, swaps) == 2
+There aren't necessarily only three cups in this game, but there will be at least two. You can assume all swaps are valid, and involve two distinct indices.
+
+
+
+find_the_ball=function(start,swaps){
+  var position = start
+  for (var i = 0; i < swaps.length; i++) {
+    if (swaps[i][0] === position) {
+      position = swaps[i][1]
+    } else if (swaps[i][1] === position) {
+      position = swaps[i][0]
+    }
+  }
+  return position
+}
+
+
+Description:
+Each exclamation mark weight is 2; Each question mark weight is 3. Put two string left and right to the balance, Are they balanced?
+
+If the left side is more heavy, return "Left"; If the right side is more heavy, return "Right"; If they are balanced, return "Balance".
+
+Examples
+balance("!!","??") === "Right"
+balance("!??","?!!") === "Left"
+balance("!?!!","?!?") === "Left"
+balance("!!???!????","??!!?!!!!!!!") === "Balance"
+Note
+Please don't post issue about difficulty or duplicate.
+
+
+
+function balance(left,right){
+  var leftTotal = 0
+  var rightTotal = 0
+  for (var i = 0; i < left.length; i++) {
+    if (left[i] === "!") {
+      leftTotal += 2
+    } else if (left[i] === "?") {
+      leftTotal += 3
+    }
+  }
+  for (var j = 0; j < right.length; j++) {
+    if (right[j] === "!") {
+      rightTotal += 2
+    } else if (right[j] === "?") {
+      rightTotal += 3
+    }
+  }
+  if (rightTotal > leftTotal) {
+    return "Right"
+  } else if (leftTotal > rightTotal) {
+    return "Left"
+  } else {
+    return "Balance"
+  }
+}
+
+
+Introduction
+Ka ka ka cypher is a cypher used by small children in some country. When a girl wants to pass something to the other girls and there are some boys nearby, she can use Ka cypher. So only the other girls are able to understand her. 
+She speaks using KA, ie.: 
+ka thi ka s ka bo ka y ka i ka s ka u ka gly what simply means this boy is ugly. 
+
+Task
+Write a function KaCokadekaMe (ka_co_ka_de_ka_me in Python) that accepts a string word and returns encoded message using ka cypher. 
+
+Our rules:
+
+The encoded word should start from ka.
+The ka goes after vowel (a,e,i,o,u)
+When there is multiple vowels together, the ka goes only after the last vowel
+When the word is finished by a vowel, do not add the ka after
+Input/Output
+The word string consists of only lowercase and uppercase characters. There is only 1 word to convert - no white spaces.
+
+Example
+KaCokadekaMe("a");  //=> "kaa"
+KaCokadekaMe("ka");  //=> "kaka"
+KaCokadekaMe("aa"); //=> "kaaa"  
+KaCokadekaMe("Abbaa"); //=> kaAkabbaa
+KaCokadekaMe("maintenance"); //=> kamaikantekanakance
+KaCokadekaMe("Woodie"); //=> kaWookadie
+KacokadekaMe("Incomprehensibilities"); //=> kaIkancokamprekahekansikabikalikatiekas
+Remark
+Ka cypher's country residents, please don't hate me for simplifying the way how we divide the words into "syllables" in the Kata. I don't want to make it too hard for other nations ;-P
+
+
+
+
+def kacokadekame(word)
+  final = "ka"
+  i = 0
+  until i > word.length - 1
+    if (word[i].downcase == "a" || word[i].downcase == "e" || word[i].downcase == "i" || word[i].downcase == "o" || word[i].downcase == "u") && (i != word.length - 1)
+      if word[i+1].downcase != "a" && word[i+1].downcase != "e" && word[i+1].downcase != "i" && word[i+1].downcase != "o" && word[i+1].downcase != "u"
+        final += word[i] + "ka"
+      else
+        final += word[i]
+      end
+    else
+      final += word[i]
+    end
+  i += 1
+  end
+  return final
+end
+
+
+Modify the kebabize function so that it converts a camel case string into a kebab case.
+
+kebabize('camelsHaveThreeHumps') // camels-have-three-humps
+kebabize('camelsHave3Humps') // camels-have-humps
+Notes:
+
+the returned string should only contain lowercase letters
+
+
+def kebabize(str)
+  final = ""
+  i = 0
+  until i > str.length-1
+    if str[i] == "0" || str[i] == "1" || str[i] == "2" || str[i] == "3" || str[i] == "4" || str[i] == "5" || str[i] == "6" || str[i] == "7" || str[i] == "8" || str[i] == "9"
+      banana = 1
+    elsif str[i].upcase == str[i]
+      final += "-" + str[i].downcase
+    else
+      final += str[i]
+    end
+  i += 1  
+  end
+  if final[0] == "-"
+    final = final[1..-1]
+  elsif final[-1] == "-"
+    final = final[0..-2]
+  end
+  return final
+end
+
+
+Given a string, return a new string that has transformed based on the input:
+
+Change case of every character, ie. lower case to upper case, upper case to lower case.
+Reverse the order of words from the input.
+For example:
+stringTransformer('Example Input')/string_transformer("Example Input") (depending on the language you are completing the Kata in) should return 'iNPUT eXAMPLE'
+
+You may assume the input only contain English alphabet and spaces.
+
+
+function stringTransformer(str) {
+  var split = str.split(" ")
+  var final = []
+  for (var i = split.length-1; i >= 0; i--) {
+    var substring = ""
+    for (var j = 0; j < split[i].length; j++) {
+      if (split[i][j].toLowerCase() === split[i][j]) {
+        substring += split[i][j].toUpperCase()
+      } else if (split[i][j].toUpperCase() === split[i][j]) {
+        substring += split[i][j].toLowerCase()
+      }
+    }
+    final.push(substring)
+  }
+  return final.join(" ")
+}
+
+
+
+The depth of an integer n is defined to be how many multiples of n it is necessary to compute before all 10 digits have appeared at least once in some multiple.
+
+example:
+
+let see n=42
+
+Multiple         value         digits     comment
+42*1              42            2,4 
+42*2              84             8         4 existed
+42*3              126           1,6        2 existed
+42*4              168            -         all existed
+42*5              210            0         2,1 existed
+42*6              252            5         2 existed
+42*7              294            9         2,4 existed
+42*8              336            3         6 existed 
+42*9              378            7         3,8 existed
+Looking at the above table under digits column you can find all the digits from 0 to 9, Hence it required 9 multiples of 42 to get all the digits. So the depth of 42 is 9. Write a function named computeDepth which computes the depth of its integer argument.Only positive numbers greater than zero will be passed as an input.
+
+
+
+
+def compute_depth(n)
+  end_array = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+  nums = []
+  i = 1
+  until nums.uniq.sort == end_array
+    iteration = (n * i).to_s.split("")
+    iteration.each do |k|
+      nums << k
+    end
+  i += 1
+  end
+  return i - 1
+end
+
+
+
+Sam is an avid collector of numbers. Every time he finds a new number he throws it on the top of his number-pile. Help Sam organise his collection so he can take it to the International Number Collectors Conference in Cologne.
+
+Given an array of numbers, your function should return an array of arrays, where each subarray contains all the duplicates of a particular number. Subarrays should be in the same order as the first occurence of the number they contain:
+
+group([3, 2, 6, 2, 1, 3])
+>>> [[3, 3], [2, 2], [6], [1]]
+Assume the input is always going to be an array of numbers. If the input is an empty array, an empty array should be returned.
+
+
+def group(arr)
+  if arr == []
+    return []
+  end
+  count = {}
+  i = 0
+  until i > arr.length - 1
+    if count[arr[i]]
+      count[arr[i]] += 1
+    else
+      count[arr[i]] = 1
+    end
+  i += 1
+  end
+  final = []
+  count.each do |num, amount|
+  temp = []
+    amount.times do |k|
+      temp << num
+    end
+    final << temp
+  end
+  return final
+end
+
+
+
+A traveling salesman has to visit clients. He got each client's address e.g. "432 Main Long Road St. Louisville OH 43071" as a list.
+
+The basic zipcode format usually consists of two capital letters followed by a white space and five digits. The list of clients to visit was given as a string of all addresses, each separated from the others by a comma, e.g. :
+
+"123 Main Street St. Louisville OH 43071,432 Main Long Road St. Louisville OH 43071,786 High Street Pollocksville NY 56432".
+
+To ease his travel he wants to group the list by zipcode.
+
+Task
+The function travel will take two parameters r (addresses' list of all clients' as a string) and zipcode and returns a string in the following format:
+
+zipcode:street and town,street and town,.../house number,house number,...
+
+The street numbers must be in the same order as the streets where they belong.
+
+If a given zipcode doesn't exist in the list of clients' addresses return "zipcode:/"
+
+Examples
+r = "123 Main Street St. Louisville OH 43071,432 Main Long Road St. Louisville OH 43071,786 High Street Pollocksville NY 56432"
+
+travel(r, "OH 43071") --> "OH 43071:Main Street St. Louisville,Main Long Road St. Louisville/123,432"
+
+travel(r, "NY 56432") --> "NY 56432:High Street Pollocksville/786"
+
+travel(r, "NY 5643") --> "NY 5643:/"
+Note for Elixir:
+In Elixir the empty addresses' input is an empty list, not an empty string.
+
+Note:
+You can see a few addresses and zipcodes in the test cases.
+
+
+def travel(r, zipcode)
+  final = zipcode + ":"
+  numbers = "/"
+  split = r.split(",")
+  i = 0
+  until i > split.length - 1
+    if zipcode == split[i][-8..-1]
+      j = 0
+      until j > split[i].length
+        if split[i][j] == " "
+          post_numbers = j
+          j = split[i].length
+        end
+      j += 1
+      end
+      if final.length > 9
+        final += ","
+      end
+      if numbers.length > 1
+        numbers += ","
+      end
+      final += split[i][post_numbers+1..-10]
+      numbers += split[i][0..post_numbers-1]
+    end
+  i += 1
+  end
+  final += numbers
+  return final
+end
+
+
+Mothers arranged dance party for children in school.On that party there are only mothers and their children.All are having great fun on dancing floor when suddenly all lights went out.Its dark night and no one can see eachother.But you were flying nearby and you can see in the dark and have ability to teleport people anywhere you want.
+
+Legend:
+-Uppercase letters stands for mothers,lowercase stand for their children. I.E "A" mothers children are "aaaa".
+-Function input:String contain only letters,Uppercase letters are unique.
+Task:
+Place all people in alphabetical order where Mothers are followed by their children.I.E "aAbaBb" => "AaaBbb".
+
+
+function findChildren(dancingBrigade){
+  upper = ""
+  lower = ""
+  for (i=0; i<dancingBrigade.length; i++) {
+    if (dancingBrigade[i].toUpperCase() === dancingBrigade[i]) {
+      upper += dancingBrigade[i]
+    } else if (dancingBrigade[i].toLowerCase() === dancingBrigade[i]) {
+      lower += dancingBrigade[i]
+    }
+  }
+  upperSorted = upper.split("").sort().join("")
+  lowerSorted = lower.split("").sort().join("")
+  for (i=0; i<upperSorted.length; i++) {
+    for (j=0; j<lowerSorted.length; j++) {
+      if (upperSorted[i].toLowerCase() === lowerSorted[j]) {
+        lowerSorted = lowerSorted.substring(0, j) + upperSorted[i] + lowerSorted.substring(j, lowerSorted.length)
+        j = lowerSorted.length
+      }
+    }
+  }
+  return lowerSorted
+};
+
+
+
+Do you speak retsec?
+You and your friends want to play undercover agents. In order to exchange your secret messages, you've come up with the following system: you take the word, cut it in half, and place the first half behind the latter. If the word has an uneven number of characters, you leave the middle at its previous place:
+
+retsec examples
+
+That way, you'll be able to exchange your messages in private.
+
+Task
+You're given a single word. Your task is to swap the halves. If the word has an uneven length, leave the character in the middle at that position and swap the chunks around it.
+
+Examples
+reverseByCenter("agent") == "nteag" // center character is e
+
+reverseByCenter("secret")  == "retsec" // no center character
+Remarks
+Don't use this to actually exchange messages in private.
+
+
+
+function reverseByCenter(s){
+  final = ""
+  for (i=Math.ceil(s.length/2); i<s.length; i++) {
+    final += s[i]
+  }
+  if (s.length % 2 === 1) {
+    final += s[Math.floor(s.length/2)]
+  }
+  for (i=0; i<Math.floor(s.length/2); i++) {
+    final += s[i]
+  }
+  return final
+}
+
+
+
+The aim of this Kata is to write a function which will reverse the case of all consecutive duplicate letters in a string. That is, any letters that occur one after the other and are identical.
+
+If the duplicate letters are lowercase then they must be set to uppercase, and if they are uppercase then they need to be changed to lowercase.
+
+Examples:
+
+reverseCase("puzzles")    Expected Result: "puZZles"
+reverseCase("massive")    Expected Result: "maSSive"
+reverseCase("LITTLE")     Expected Result: "LIttLE"
+reverseCase("shhh")       Expected Result: "sHHH"
+Arguments passed will include only alphabetical letters A–Z or a–z.
+
+
+
+
+def reverse(str)
+  final = ""
+  i = 0
+  until i > str.length-1
+    if str[i] == str[i+1] || str[i] == str[i-1]
+      if str[i].upcase == str[i]
+        final += str[i].downcase
+      elsif str[i].downcase == str[i]
+        final += str[i].upcase
+      end
+    else
+      final += str[i]
+    end
+  i += 1
+  end
+  return final
+end
+
+
+Create a function that takes a string as a parameter and does the following, in this order:
+
+replaces every letter with the letter following it in the alphabet (see note below)
+makes any vowels capital
+makes any consonants lower case
+Note: the alphabet should wrap around, so Z becomes A
+
+So, for example the string "Cat30" would return "dbU30" (Cat30 --> Dbu30 --> dbU30)
+
+
+def changer(string)
+  final = ""
+  alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  i = 0
+  until i > string.length - 1
+    number = true
+    j = 0
+    until j > alphabet.length - 1
+      if string[i] == alphabet[j]
+        if alphabet[j+1].upcase == "A" || alphabet[j+1].upcase == "E" || alphabet[j+1].upcase == "I" || alphabet[j+1].upcase == "O" || alphabet[j+1].upcase == "U"
+          final += alphabet[j + 1].upcase
+          j = alphabet.length
+          number = false
+        else
+          final += alphabet[j + 1].downcase
+          j = alphabet.length
+          number = false
+        end
+      end
+    j += 1
+    end
+    if number == true 
+      final += string[i]
+    end
+  i += 1
+  end
+  return final
+end
+
+
+Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indices of these items should then be returned in an array like so: [index1, index2].
+
+For the purposes of this kata, some tests may have multiple answers; any valid solutions will be accepted.
+
+The input will always be valid (numbers will be an array of length 2 or greater, and all of the items will be numbers; target will always be the sum of two different items from that array).
+
+Based on: http://oj.leetcode.com/problems/two-sum/
+
+
+function twoSum(numbers, target) {
+  final = []
+  for (i=0; i<numbers.length; i++) {
+    for (j=i+1; j<numbers.length; j++) {
+      if (numbers[i] + numbers[j] === target) {
+        final.push(i)
+        final.push(j)
+        return final
+      }
+    }
+  }
+}
+
+
+In an attempt to boost sales, the manager of the pizzeria you work at has devised a pizza rewards system: if you already made at least 5 orders of at least 20 dollars, you get a free 12 inch pizza with 3 toppings of your choice.
+
+However, the rewards system may change in the future. Your manager wants you to implement a function that, given a dictionary of customers, a minimum number of orders and a minimum order value, returns a set of the customers who are eligible for a reward.
+
+Customers in the dictionary are represented as:
+
+{ 'customerName' : [list_of_order_values_as_integers] }
+See example test case for more details.
+
+
+def pizza_rewards(customers, min_orders, min_price)
+  final = []
+  customers.each do |name, order|
+    count = 0
+    order.each do |k|
+      if k >= min_price
+        count += 1
+      end
+    end
+    if count >= min_orders
+      final << name
+    end
+  end
+  return final
+end
+
+
+When no more interesting kata can be resolved, I just choose to create the new kata, to solve their own, to enjoy the process --myjinxin2015 said
+
+Description:
+Given an array arr that contains some integers(positive, negative or 0), and a range list such as [[start1,end1],[start2,end2],...], start and end are the index of arr and start always less than end. Your task is to calculate the sum value of each range (start index and end index are both inclusive), and return the maximum sum value.
+
+For example:
+
+ Given arr = [1,-2,3,4,-5,-4,3,2,1], 
+       range = [[1,3],[0,4],[6,8]]
+ should return 6
+
+ calculation process:
+ range[1,3] = arr[1]+arr[2]+arr[3] = 5
+ range[0,4] = arr[0]+arr[1]+arr[2]+arr[3]+arr[4] = 1
+ range[6,8] = arr[6]+arr[7]+arr[8] = 6
+ So the maximum sum value is 6
+Note:
+arr/$a always has at least 5 elements;
+range/$range/ranges always has at least 1 element;
+All inputs are valid;
+This is a simple version, if you want some challenge, please try the challenge version.
+Some Examples
+ maxSum([1,-2,3,4,-5,-4,3,2,1],[[1,3],[0,4],[6,8]]) === 6
+ maxSum([1,-2,3,4,-5,-4,3,2,1],[[1,3]]) === 5
+ maxSum([1,-2,3,4,-5,-4,3,2,1],[[1,4],[2,5]]) === 0
+
+
+
+ Dave has a lot of data he is required to apply filters to, which are simple enough, but he wants a shorter way of doing so.
+
+He wants the following functions to work as expected:
+
+even    // [1,2,3,4,5].even() should return [2,4]
+odd     // [1,2,3,4,5].odd() should return [1,3,5]
+under   // [1,2,3,4,5].under(4) should return [1,2,3]
+over    // [1,2,3,4,5].over(4) should return [5]
+inRange // [1,2,3,4,5].inRange(1,3) should return [1,2,3]
+They should also work when used together, for example:
+
+[1,2,18,19,20,21,22,30,40,50,100].even().inRange(18,30) // should return [18, 20, 22, 30]
+And finally the filters should only accept integer values from an array, for example:
+
+["a", 1, "b", 300, "x", "q", 63, 122, 181, "z", 0.83, 0.11].even() // should return [300, 122]
+
+
+Array.prototype.even = function(){
+  final = []
+  for (i=0; i<this.length; i++) {
+    if ((this[i] % 2 === 0) && Number.isInteger(this[i])) {
+      final.push(this[i])
+    }
+  }
+  return final
+}
+
+Array.prototype.odd = function(){
+  final = []
+  for (i=0; i<this.length; i++) {
+    if ((this[i] % 2 === 1) && Number.isInteger(this[i])) {
+      final.push(this[i])
+    }
+  }
+  return final
+}
+
+Array.prototype.under = function(x){
+  final = []
+  for (i=0; i<this.length; i++) {
+    if ((this[i] < x) && Number.isInteger(this[i])) {
+      final.push(this[i])
+    }
+  }
+  return final
+}
+
+Array.prototype.over = function(x){
+  final = []
+  for (i=0; i<this.length; i++) {
+    if ((this[i] > x) && Number.isInteger(this[i])) {
+      final.push(this[i])
+    }
+  }
+  return final
+}
+
+Array.prototype.inRange = function(min,max){
+  final = []
+  for (i=0; i<this.length; i++) {
+    if ((min <= this[i] && this[i] <= max) && Number.isInteger(this[i])) {
+      final.push(this[i])
+    }
+  }
+  return final
+}
+Solution:
+
+Array.prototype.even = function(){
+  // ...
+}
+​
+Array.prototype.odd = function(){
+  // ...
+}
+​
+Array.prototype.under = function(x){
+  // ...
+}
+​
+Array.prototype.over = function(x){
+  // ...
+}
+​
+Array.prototype.inRange = function(min,max){
+  // ...
+}
+​
+Sample Tests:
+
+Test.assertSimilar([1,2,3,4,5].even(),[2,4])
+Test.assertSimilar([1,2,3,4,5].odd() ,[1,3,5])
+Test.assertSimilar([1,2,3,4,5].under(4),[1,2,3])
+Test.assertSimilar([1,2,3,4,5].over(4) ,[5])
+Test.assertSimilar([1,2,3,4,5].inRange(1,3),[1,2,3])
+​
+Test.assertSimilar([1,2,18,19,20,21,22,30,40,50,100].even().inRange(18,30), [18, 20, 22, 30])
+Test.assertSimilar(["a", 1, "b", 300, "x", "q", 63, 122, 181, "z", 0.83, 0.11].even(),[300, 122])
+​
+​
+SKIPVIEW SOLUTIONSRESETRUN SAMPLE TESTSATTEMPT
+
+
+
+
 
